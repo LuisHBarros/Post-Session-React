@@ -36,6 +36,11 @@ export function Post(props) {
     setNewCommentText(event.target.value);
   }
 
+  function handleNewCommentInvalid(event) {
+    event.target.setCustomValidity("");
+    event.target.setCustomValidity("Escreva um comentário antes de enviar");
+  }
+
   function handleCreateNewComment(event) {
     event.preventDefault();
     SetComments([
@@ -100,8 +105,12 @@ export function Post(props) {
           placeholder="Escreva seu comentário"
           onChange={handleNewComment}
           value={newCommentText}
+          onInvalid={handleNewCommentInvalid}
+          required
         />
-        <button type="submit">Comentar</button>
+        <button type="submit" disabled={newCommentText.length === 0}>
+          Comentar
+        </button>
       </form>
       <div className={styles.commentList}>
         {comments.map((comment) => {
